@@ -20,7 +20,7 @@ public class HelloControllerTest {
     @Test
     public void hello_will_return() throws Exception {
         String hello = "hello";
-        String my = "my";
+        String my = "my.";
 
         mvc.perform(get("/hello"))
                 .andExpect(status().isOk())
