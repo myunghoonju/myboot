@@ -8,10 +8,10 @@ public class HelloLombok {
     private long amount;
 
     public HelloLombok() {
-        setValue(name, amount);
+        setValue();
     }
 
-    private void setValue(String name, long amount) {
+    private void setValue() {
         this.name = "1";
         this.amount = 1;
     }
