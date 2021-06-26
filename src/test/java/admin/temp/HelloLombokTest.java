@@ -1,4 +1,4 @@
-package admin.web.temp;
+package admin.temp;
 
 import org.junit.Assert;
 import org.junit.Test;

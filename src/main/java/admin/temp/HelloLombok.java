@@ -1,4 +1,4 @@
-package admin.web.temp;
+package admin.temp;
 
 import lombok.Getter;
 
