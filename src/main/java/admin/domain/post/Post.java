@@ -6,21 +6,21 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Getter
 @NoArgsConstructor
-@Entity // never user @Setter
+@DynamicUpdate
+@Entity // never use @Setter
 public class Post {
 
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increament
     private Long id;
-
     @Column(length = 500, nullable = false)
     private String title;
-
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
-
     private String author;
 
     @Builder
@@ -28,5 +28,10 @@ public class Post {
         this.title = title;
         this.content = content;
         this.author = author;
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }
