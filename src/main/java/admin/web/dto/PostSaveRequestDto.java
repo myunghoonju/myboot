@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostSaveRequestDto {
+
     private String title;
     private String content;
     private String author;

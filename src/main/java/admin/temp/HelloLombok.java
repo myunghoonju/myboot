@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class HelloLombok {
+
     private String name;
     private long amount;
 
