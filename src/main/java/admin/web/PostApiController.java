@@ -19,6 +19,11 @@ public class PostApiController {
 
     private final PostService postService;
 
+    @GetMapping("/post/save")
+    public String savePost() {
+        return "save-post";
+    }
+
     @PostMapping("/api/v1/post")
     public Long save(@RequestBody PostSaveRequestDto requestDto) {
         return postService.save(requestDto);
