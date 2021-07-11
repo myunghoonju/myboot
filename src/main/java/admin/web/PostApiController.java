@@ -6,6 +6,7 @@ import admin.web.dto.PostSaveRequestDto;
 import admin.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,12 @@ public class PostApiController {
     @PutMapping("/api/v1/post/{id}")
     public Long update(@PathVariable Long id, @RequestBody PostUpdateRequestDto postUpdateRequestDto) {
         return postService.update(id, postUpdateRequestDto);
+    }
+
+    @DeleteMapping("/api/v1/post/{id}")
+    public Long delete(@PathVariable Long id) {
+        postService.delete(id);
+        return id;
     }
 
     @GetMapping("/api/v1/post/get/{id}")

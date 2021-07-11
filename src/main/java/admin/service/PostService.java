@@ -1,14 +1,18 @@
 package admin.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import admin.domain.post.Post;
 import admin.domain.post.PostRepository;
+import admin.web.dto.PostListResponseDto;
 import admin.web.dto.PostResponseDto;
 import admin.web.dto.PostSaveRequestDto;
 import admin.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -31,9 +35,24 @@ public class PostService {
     }
 
     @Transactional
+    public void delete(Long id) {
+        Post post = postRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Cannot find user with the id = " + id));
+        postRepository.delete(post);
+    }
+
+    @Transactional
     public PostResponseDto findById(Long id) {
         Post postEntity = postRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Cannot find user with the id = " + id));
         return new PostResponseDto(postEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> findAllDESC() {
+        return postRepository.findAllDESC()
+            .stream()
+            .map(PostListResponseDto::new)
+            .collect(Collectors.toList());
     }
 }
