@@ -23,23 +23,23 @@ let main = {
             url: '/api/v1/post',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.parse(data)
+            data: JSON.stringify(data)
         })
             .done(function () {
                 alert('Success');
                 window.location.href= '/';
             })
-            .fail(function () {
-                alert(JSON.stringify(error));
+            .fail(function (data) {
+                alert(JSON.stringify(data));
             });
     },
     update : function () {
-        var data = {
+        let data = {
             title: $('#title').val(),
             content: $('#content').val()
         };
 
-        var id = $('#id').val();
+        let id = $('#id').val();
 
         $.ajax({
             type: 'PUT',
@@ -52,12 +52,12 @@ let main = {
                 alert('Success');
                 window.location.href = '/';
             })
-            .fail(function (error) {
-                alert(JSON.stringify(error));
+            .fail(function (data) {
+                alert(JSON.stringify(data));
         });
     },
     delete : function () {
-        var id = $('#id').val();
+        let id = $('#id').val();
 
         $.ajax({
             type: 'DELETE',
@@ -69,8 +69,8 @@ let main = {
                 alert('Success');
                 window.location.href = '/';
             })
-            .fail(function (error) {
-                alert(JSON.stringify(error));
+            .fail(function (data) {
+                alert(JSON.stringify(data));
             });
     }
 }
