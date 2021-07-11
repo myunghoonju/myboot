@@ -1,10 +1,10 @@
 package admin.temp;
 
-import admin.temp.HelloController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -19,6 +19,7 @@ public class HelloControllerTest {
     public MockMvc mvc;
 
     @Test
+    @WithMockUser(roles = "USER")
     public void hello_will_return() throws Exception {
         String hello = "hello";
         String my = "my";

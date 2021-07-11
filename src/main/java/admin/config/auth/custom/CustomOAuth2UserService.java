@@ -1,4 +1,4 @@
-package admin.config.auth;
+package admin.config.auth.custom;
 
 import java.util.Collections;
 

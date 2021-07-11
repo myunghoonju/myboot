@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import admin.config.auth.custom.annotation.LoginUser;
 import admin.config.auth.dto.SessionUser;
 import admin.service.PostService;
 import admin.web.dto.PostResponseDto;
@@ -20,9 +21,9 @@ public class indexController {
 	private final HttpSession httpSession;
 
 	@GetMapping("/")
-	public String index(Model model) {
+	public String index(Model model, @LoginUser SessionUser sessionUser) {
 		model.addAttribute("posts", postService.findAllDESC());
-		SessionUser user = (SessionUser)httpSession.getAttribute("user");
+		SessionUser user = sessionUser;
 		if (user != null) {
 			model.addAttribute("name", user.getName());
 		}
