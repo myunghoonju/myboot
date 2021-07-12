@@ -18,11 +18,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf().disable()
-			.headers().frameOptions().disable()
+			.headers().frameOptions().disable()// for h2-console
 			.and()
-				.authorizeRequests()
+				.authorizeRequests() // to use antMatchers
 				.antMatchers("/","/h2-console/**","/profile/","/css/**", "/images/**", "/js/**").permitAll()
-				.antMatchers("/api/v1/**").hasRole(Role.USER.name())
+				.antMatchers("/api/v1/**").hasRole(Role.USER.name()) // only User
 				.anyRequest().authenticated()
 			.and()
 				.logout()
