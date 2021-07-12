@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -15,6 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -40,8 +42,11 @@ public class PostApiControllerTest {
 	private WebApplicationContext webApplicationContext;
 
 	@Before
-	public void setMockMvc() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+	public void setUp() {
+		mockMvc = MockMvcBuilders
+			.webAppContextSetup(webApplicationContext)
+			.apply(springSecurity())
+			.build();
 	}
 
 	@After
@@ -50,6 +55,7 @@ public class PostApiControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = "USER")
 	public void add_post_test() throws Exception {
 		String title = "title_test2";
 		String content = "content_test2";
@@ -74,6 +80,7 @@ public class PostApiControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = "USER")
 	public void edit_post_test() throws Exception {
 		String title = "title_test3";
 		String content = "content_test3";
