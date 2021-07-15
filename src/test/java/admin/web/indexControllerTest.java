@@ -20,6 +20,7 @@ public class indexControllerTest {
 	private TestRestTemplate testRestTemplate;
 
 	@Test
+	@WithMockUser(roles = "USER")
 	public void load_main_page_test() {
 		String body = this.testRestTemplate.getForObject("/", String.class);
 		assertThat(body).contains("Welcome to my web service.");
