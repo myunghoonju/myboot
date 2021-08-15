@@ -2,6 +2,8 @@ package admin.web;
 
 import javax.servlet.http.HttpSession;
 
+import admin.web.dto.PostListResponseDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import admin.config.auth.dto.SessionUser;
 import admin.service.PostService;
 import admin.web.dto.PostResponseDto;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -29,6 +33,11 @@ public class indexController {
 		}
 
 		return "index";
+	}
+
+	@GetMapping("/post/list")
+	public ResponseEntity<List<PostListResponseDto>> getList() {
+		return ResponseEntity.ok().body(postService.findAllDESC());
 	}
 
 	@GetMapping("/post/save")
