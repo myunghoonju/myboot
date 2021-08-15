@@ -4,14 +4,14 @@
         <div class="col-md-6">
             Good Day
             {{#name}}
-               {{name}} !
+                {{name}} !
                 <br>
                 <a href="/post/save" role="button" class="btn btn-primary">new content</a>
                 <a href="/logout" class="btn btn-info active" role="button">Log-out</a>
             {{/name}}
             {{^name}}
                 <br>
-            <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
             {{/name}}
         </div>
     </div>
