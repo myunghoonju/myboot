@@ -1,17 +1,17 @@
 let main = {
-    init : function () {
+    init() {
       let _this = this;
-      $("#btn_save").on("click", function () {
+      $("#btn_save").on("click", () => {
           _this.save();
       });
-      $("#btn_update").on("click", function () {
+      $("#btn_update").on("click", () => {
             _this.update();
       });
-      $('#btn_delete').on('click', function () {
+      $('#btn_delete').on('click', () => {
             _this.delete();
       });
     },
-    save : function () {
+    save() {
         let data = {
             title: $("#title").val(),
             content: $("#content").val(),
@@ -25,15 +25,15 @@ let main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
         })
-            .done(function () {
+            .done(() => {
                 alert('Success');
                 window.location.href= '/';
             })
-            .fail(function (data) {
+            .fail((data) => {
                 alert(JSON.stringify(data));
             });
     },
-    update : function () {
+    update() {
         let data = {
             title: $('#title').val(),
             content: $('#content').val()
@@ -48,15 +48,15 @@ let main = {
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
         })
-            .done(function() {
+            .done(() => {
                 alert('Success');
                 window.location.href = '/';
             })
-            .fail(function (data) {
+            .fail((data) => {
                 alert(JSON.stringify(data));
         });
     },
-    delete : function () {
+    delete() {
         let id = $('#id').val();
 
         $.ajax({
@@ -65,11 +65,11 @@ let main = {
             dataType: 'json',
             contentType:'application/json; charset=utf-8'
         })
-            .done(function() {
+            .done(() => {
                 alert('Success');
                 window.location.href = '/';
             })
-            .fail(function (data) {
+            .fail((data) => {
                 alert(JSON.stringify(data));
             });
     }

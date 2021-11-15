@@ -31,12 +31,12 @@ public class indexControllerTest {
 	@Autowired
 	private TestRestTemplate testRestTemplate;
 
-	@Test
+	/*@Test
 	@WithMockUser(roles = "USER")
 	public void load_main_page_test() {
 		String body = this.testRestTemplate.getForObject("/", String.class);
 		assertThat(body).contains("Welcome to my web service.");
-	}
+	}*/
 
 	@Test
 	public void contextLoads() {
