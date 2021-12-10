@@ -50,7 +50,7 @@ dependencies {
     implementation(group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.5.0')
 }
 
-def querydslDir = 'src/main/generated/querydsl'
+def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
     jpa = true
