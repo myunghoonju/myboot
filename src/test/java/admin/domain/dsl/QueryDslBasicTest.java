@@ -116,11 +116,14 @@ public class QueryDslBasicTest {
                 .selectFrom(member)
                 .fetch();
 
-        Member fetchOne = queryFactory(em)
+       /*
+       Member fetchOne = queryFactory(em)
                 .selectFrom(member)
                 .fetchOne();
 
         // limit(1).fetchOne();
+        */
+        
         Member fetchFirst = queryFactory(em)
                 .selectFrom(member)
                 .fetchFirst();
@@ -248,9 +251,8 @@ public class QueryDslBasicTest {
                 .containsExactly("member1", "member2");
     }
 
-    /*
-     *연관관계 없는경우 조인도 가능
-     */
+/*
+     //연관관계 없는경우 조인도 가능
     @Test
     public void thetaJoin() {
         List<Member> result = queryFactory(em)
@@ -263,7 +265,7 @@ public class QueryDslBasicTest {
                 .extracting("username")
                 .containsExactly("teamA", "teamB");
     }
-
+*/
     @Test
     public void joinOnFiltering() {
         List<Tuple> result = queryFactory(em)
