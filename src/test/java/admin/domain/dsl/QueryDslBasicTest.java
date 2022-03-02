@@ -1,3 +1,4 @@
+/*
 package admin.domain.dsl;
 
 import com.querydsl.core.QueryResults;
@@ -21,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static admin.domain.dsl.QMember.*;
 import static admin.domain.dsl.QTeam.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class QueryDslBasicTest {
@@ -29,13 +29,11 @@ public class QueryDslBasicTest {
     @Autowired
     EntityManager em;
 
-    //TODO fix instantiate
-    static JPAQueryFactory queryFactory(EntityManager em) {
-        return new JPAQueryFactory(em);
-    }
+    JPAQueryFactory queryFactory;
 
     @Before
     public void before() {
+        queryFactory = new JPAQueryFactory(em);
         Team teamA = new Team("teamA");
         Team teamB = new Team("teamB");
         em.persist(teamA);
@@ -65,7 +63,7 @@ public class QueryDslBasicTest {
     @Test
     public void startQueryDsl() {
         QMember m = new QMember("m");
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .select(m)
                 .from(m)
                 .where(m.username.eq("member1")) // 파라미터 바인딩
@@ -76,7 +74,7 @@ public class QueryDslBasicTest {
 
     @Test
     public void startQueryDslTwo() {
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .select(member)
                 .from(member)
                 .where(member.username.eq("member1")) // 파라미터 바인딩
@@ -88,7 +86,7 @@ public class QueryDslBasicTest {
     // .and() or ,
     @Test
     public void searchAnd() {
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .selectFrom(member)
                 .where(member.username.eq("member1")
                         .and(member.age.between(10, 30)))
@@ -100,7 +98,7 @@ public class QueryDslBasicTest {
     // .and() or ,
     @Test
     public void searchComma() {
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .selectFrom(member)
                 .where(
                         member.username.eq("member1"),
@@ -112,17 +110,17 @@ public class QueryDslBasicTest {
 
     @Test
     public void resultFetch() {
-        List<Member> memberList = queryFactory(em)
+        List<Member> memberList = queryFactory
                 .selectFrom(member)
                 .fetch();
-
-       /*
+/*
        Member fetchOne = queryFactory(em)
                 .selectFrom(member)
                 .fetchOne();
 
         // limit(1).fetchOne();
-        */
+        *//*
+
         
         Member fetchFirst = queryFactory(em)
                 .selectFrom(member)
@@ -140,12 +138,14 @@ public class QueryDslBasicTest {
         long total = queryFactory(em).selectFrom(member).fetchCount();
     }
 
-    /*
+
+/*
     * 회원 정렬 순서
     * 1. 회원 나이 내림차순
     * 2. 회원 이름 오름차순
     * 단 2에서 회워 이름 없으면 마지막에 출력(null last)
-    * */
+    * *//*
+
     @Test
     public void sort() {
         em.persist(new Member(null, 100));
@@ -235,9 +235,11 @@ public class QueryDslBasicTest {
         assertThat(teamB.get(member.age.avg())).isEqualTo(35);
     }
 
-    /*
+    */
+/*
     * a팀에 소속된 모든 회원
-    * */
+    * *//*
+
     @Test
     public void join() {
         List<Member> result = queryFactory(em)
@@ -251,6 +253,7 @@ public class QueryDslBasicTest {
                 .containsExactly("member1", "member2");
     }
 
+*/
 /*
      //연관관계 없는경우 조인도 가능
     @Test
@@ -265,7 +268,8 @@ public class QueryDslBasicTest {
                 .extracting("username")
                 .containsExactly("teamA", "teamB");
     }
-*/
+*//*
+
     @Test
     public void joinOnFiltering() {
         List<Tuple> result = queryFactory(em)
@@ -283,6 +287,7 @@ public class QueryDslBasicTest {
 
     @PersistenceUnit
     EntityManagerFactory emf;
+*/
 /*
     @Test
     public void withoutFetchJoin() {
@@ -295,7 +300,8 @@ public class QueryDslBasicTest {
         assertThat(loaded).as("withoutFetchJoin").isFalse();
 
     }
-*/
+*//*
+
     @Test
     public void withFetchJoin() {
         Member findMember = queryFactory(em)
@@ -308,3 +314,4 @@ public class QueryDslBasicTest {
         assertThat(loaded).as("withoutFetchJoin").isTrue();
     }
 }
+*/

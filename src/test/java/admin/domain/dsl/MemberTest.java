@@ -13,7 +13,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @Transactional
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class MemberTest {
 
