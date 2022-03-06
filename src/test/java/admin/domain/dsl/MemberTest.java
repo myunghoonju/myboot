@@ -10,8 +10,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest

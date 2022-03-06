@@ -28,14 +28,11 @@ public class QueryDslBasicTest {
 
     @Autowired
     EntityManager em;
-
-    //TODO fix instantiate
-    static JPAQueryFactory queryFactory(EntityManager em) {
-        return new JPAQueryFactory(em);
-    }
+    JPAQueryFactory queryFactory;
 
     @Before
     public void before() {
+        queryFactory = new JPAQueryFactory(em);
         Team teamA = new Team("teamA");
         Team teamB = new Team("teamB");
         em.persist(teamA);
@@ -65,7 +62,7 @@ public class QueryDslBasicTest {
     @Test
     public void startQueryDsl() {
         QMember m = new QMember("m");
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .select(m)
                 .from(m)
                 .where(m.username.eq("member1")) // 파라미터 바인딩
@@ -76,7 +73,7 @@ public class QueryDslBasicTest {
 
     @Test
     public void startQueryDslTwo() {
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .select(member)
                 .from(member)
                 .where(member.username.eq("member1")) // 파라미터 바인딩
@@ -88,7 +85,7 @@ public class QueryDslBasicTest {
     // .and() or ,
     @Test
     public void searchAnd() {
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .selectFrom(member)
                 .where(member.username.eq("member1")
                         .and(member.age.between(10, 30)))
@@ -100,7 +97,7 @@ public class QueryDslBasicTest {
     // .and() or ,
     @Test
     public void searchComma() {
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .selectFrom(member)
                 .where(
                         member.username.eq("member1"),
@@ -112,7 +109,7 @@ public class QueryDslBasicTest {
 
     @Test
     public void resultFetch() {
-        List<Member> memberList = queryFactory(em)
+        List<Member> memberList = queryFactory
                 .selectFrom(member)
                 .fetch();
 
@@ -124,12 +121,12 @@ public class QueryDslBasicTest {
         // limit(1).fetchOne();
         */
         
-        Member fetchFirst = queryFactory(em)
+        Member fetchFirst = queryFactory
                 .selectFrom(member)
                 .fetchFirst();
 
         //   return new QueryResults<T>(list, modifiers, total);
-        QueryResults<Member> results = queryFactory(em)
+        QueryResults<Member> results = queryFactory
                 .selectFrom(member)
                 .fetchResults();
 
@@ -137,7 +134,7 @@ public class QueryDslBasicTest {
         List<Member> content = results.getResults();
 
         // count query
-        long total = queryFactory(em).selectFrom(member).fetchCount();
+        long total = queryFactory.selectFrom(member).fetchCount();
     }
 
     /*
@@ -152,7 +149,7 @@ public class QueryDslBasicTest {
         em.persist(new Member("member5", 100));
         em.persist(new Member("member6", 100));
 
-        List<Member> result = queryFactory(em)
+        List<Member> result = queryFactory
                 .selectFrom(member)
                 .where(member.age.eq(100))
                 .orderBy(member.age.desc(), member.username.asc().nullsLast())
@@ -169,7 +166,7 @@ public class QueryDslBasicTest {
 
     @Test
     public void paging1() {
-        List<Member> result = queryFactory(em)
+        List<Member> result = queryFactory
                 .selectFrom(member)
                 .orderBy(member.username.desc())
                 .offset(1)
@@ -181,7 +178,7 @@ public class QueryDslBasicTest {
 
     @Test
     public void paging2() {
-        QueryResults<Member> results = queryFactory(em)
+        QueryResults<Member> results = queryFactory
                 .selectFrom(member)
                 .orderBy(member.username.desc())
                 .offset(1)
@@ -198,7 +195,7 @@ public class QueryDslBasicTest {
     // Tuple: various type
     @Test
     public void aggregation() {
-       List<Tuple> result = queryFactory(em)
+       List<Tuple> result = queryFactory
                 .select(
                         member.count(),
                         member.age.sum(),
@@ -219,7 +216,7 @@ public class QueryDslBasicTest {
 
     @Test
     public void group() {
-        List<Tuple> result = queryFactory(em)
+        List<Tuple> result = queryFactory
                 .select(team.name, member.age.avg())
                 .from(member)
                 .join(member.team, team)
@@ -240,7 +237,7 @@ public class QueryDslBasicTest {
     * */
     @Test
     public void join() {
-        List<Member> result = queryFactory(em)
+        List<Member> result = queryFactory
                 .selectFrom(member)
                 .join(member.team, team)
                 .where(team.name.eq("teamA"))
@@ -268,7 +265,7 @@ public class QueryDslBasicTest {
 */
     @Test
     public void joinOnFiltering() {
-        List<Tuple> result = queryFactory(em)
+        List<Tuple> result = queryFactory
                 .select(member, team)
                 .from(member)
                 .join(member.team, team) // member.team, team > id matching
@@ -298,7 +295,7 @@ public class QueryDslBasicTest {
 */
     @Test
     public void withFetchJoin() {
-        Member findMember = queryFactory(em)
+        Member findMember = queryFactory
                 .selectFrom(member)
                 .join(member.team, team).fetchJoin()
                 .where(member.username.eq("member1"))
