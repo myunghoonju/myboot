@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,12 +32,12 @@ public class indexControllerTest {
 	@Autowired
 	private TestRestTemplate testRestTemplate;
 
-	/*@Test
+	@Test
 	@WithMockUser(roles = "USER")
 	public void load_main_page_test() {
 		String body = this.testRestTemplate.getForObject("/", String.class);
-		assertThat(body).contains("Welcome to my web service.");
-	}*/
+		assertThat(body).isNotBlank();
+	}
 
 	@Test
 	public void contextLoads() {
