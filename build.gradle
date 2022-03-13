@@ -39,6 +39,7 @@ dependencies {
     implementation('org.springframework.session:spring-session-jdbc')
     implementation('org.springframework.boot:spring-boot-starter-data-redis')
     implementation ('org.springframework.boot:spring-boot-starter-cache')
+    implementation('io.netty:netty-all:4.1.10.Final')
 
     implementation('org.projectlombok:lombok')
     testImplementation('org.projectlombok:lombok')
@@ -47,6 +48,7 @@ dependencies {
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation('org.mockito:mockito-core:2.16.0')
 
     implementation(group: 'io.springfox', name: 'springfox-swagger2', version: '2.5.0')
     implementation(group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.5.0')
