@@ -42,13 +42,5 @@ public class Member {
     public Member(String username, int age, Team team) {
         this.username = username;
         this.age = age;
-        if (team != null) {
-            changeTeam(team);
-        }
-    }
-
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);
     }
 }

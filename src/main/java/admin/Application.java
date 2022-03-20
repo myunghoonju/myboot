@@ -4,17 +4,19 @@ import admin.message.Receiver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 @Slf4j
+@EnableCaching
 @EnableJpaAuditing
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) throws InterruptedException {
         ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
-
+/*
         StringRedisTemplate template = ctx.getBean(StringRedisTemplate.class);
         Receiver receiver = ctx.getBean(Receiver.class);
 
@@ -24,6 +26,6 @@ public class Application {
             Thread.sleep(500L);
         }
 
-        System.exit(0);
+        System.exit(0);*/
     }
 }

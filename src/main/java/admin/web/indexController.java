@@ -1,28 +1,28 @@
 package admin.web;
 
-import javax.servlet.http.HttpSession;
-
+import admin.config.auth.custom.annotation.LoginUser;
+import admin.config.auth.dto.SessionUser;
+import admin.domain.dsl.Team;
+import admin.service.PostService;
 import admin.web.dto.PostListResponseDto;
+import admin.web.dto.PostResponseDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import admin.config.auth.custom.annotation.LoginUser;
-import admin.config.auth.dto.SessionUser;
-import admin.service.PostService;
-import admin.web.dto.PostResponseDto;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class indexController {
 
 	private final PostService postService;
-	private final HttpSession httpSession;
 
 	@GetMapping("/")
 	public String index(Model model, @LoginUser SessionUser sessionUser) {
@@ -30,6 +30,15 @@ public class indexController {
 		SessionUser user = sessionUser;
 		if (user != null) {
 			model.addAttribute("name", user.getName());
+		}
+
+		Map<String, List<Team>> test = postService.test();
+		List<Team> store = test.get("store");
+
+		log.error("test: {}", test.get("store"));
+
+		for (Team t : store) {
+			log.error("name :: {}", t.getName());
 		}
 
 		return "index";
