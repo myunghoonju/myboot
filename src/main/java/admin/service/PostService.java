@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 
 import admin.domain.dsl.Member;
 import admin.domain.dsl.Team;
+import admin.domain.dsl.TeamTwo;
+import admin.domain.dsl.Tes;
+import admin.domain.dsl.TesTwo;
 import admin.domain.post.Post;
 import admin.domain.post.PostRepository;
 import admin.web.dto.PostListResponseDto;
@@ -88,6 +91,55 @@ public class PostService {
 
         Map<String, List<Team>> mymap = new HashMap<>();
         mymap.put("store", objects);
+
+        return mymap;
+    }
+
+
+
+    @Cacheable(cacheNames = "tes", cacheManager = "redisCacheManager")
+    public Tes test2() {
+        log.error("PostService.test2() called");
+        Tes tes = new Tes();
+        tes.setName("tes");
+
+        return tes;
+    }
+
+    @Cacheable(cacheNames = "tesTwo", cacheManager = "redisCacheManager")
+    public TesTwo test3() {
+        log.error("PostService.test2() called");
+        TesTwo tes = new TesTwo();
+        tes.setNumber(1);
+
+        return tes;
+    }
+
+
+    @Cacheable(cacheNames = "storeTwo", cacheManager = "redisCacheManager")
+    public Map<String, List<TeamTwo>> test4() {
+        log.error("PostService.test() called");
+
+        TeamTwo teamA = TeamTwo.builder()
+                .id(1L)
+                .name("teamC")
+                .age(1)
+                .build();
+
+        Member member = new Member("a", 1);
+
+        TeamTwo teamB = TeamTwo.builder()
+                .id(2L)
+                .name("teamD")
+                .age(2)
+                .build();
+
+        List<TeamTwo> objects = new ArrayList<>();
+        objects.add(teamA);
+        objects.add(teamB);
+
+        Map<String, List<TeamTwo>> mymap = new HashMap<>();
+        mymap.put("storeTwo", objects);
 
         return mymap;
     }

@@ -3,6 +3,9 @@ package admin.web;
 import admin.config.auth.custom.annotation.LoginUser;
 import admin.config.auth.dto.SessionUser;
 import admin.domain.dsl.Team;
+import admin.domain.dsl.TeamTwo;
+import admin.domain.dsl.Tes;
+import admin.domain.dsl.TesTwo;
 import admin.service.PostService;
 import admin.web.dto.PostListResponseDto;
 import admin.web.dto.PostResponseDto;
@@ -33,12 +36,24 @@ public class indexController {
 		}
 
 		Map<String, List<Team>> test = postService.test();
+		Tes test2 = postService.test2();
+		TesTwo test3 = postService.test3();
+		Map<String, List<TeamTwo>> teamTwo = postService.test4();
 		List<Team> store = test.get("store");
+		List<TeamTwo> storeTwo = teamTwo.get("storeTwo");
 
 		log.error("test: {}", test.get("store"));
+		log.error("teamTwo: {}", teamTwo.get("storeTwo"));
+		log.error("Tes   tes: {}", test2.getName());
+		log.error("TesTwo   test3: {}", test3.getNumber());
 
 		for (Team t : store) {
+			log.error("name :: {}", t.getId());
 			log.error("name :: {}", t.getName());
+		}
+		for (TeamTwo t : storeTwo) {
+			log.error("TeamTwo name :: {}", t.getName());
+			log.error("TeamTwo name :: {}", t.getAge());
 		}
 
 		return "index";
