@@ -11,8 +11,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @NoArgsConstructor
-@Entity // never use @Setter
 @DynamicUpdate
+@Entity // never use @Setter
 public class Post extends BaseTimeEntity {
 
     @Id // primary key
