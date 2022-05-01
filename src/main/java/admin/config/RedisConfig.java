@@ -1,21 +1,30 @@
 package admin.config;
 
+import admin.config.auth.custom.CustomCacheErrorHandler;
 import admin.domain.dsl.Tes;
 import admin.domain.dsl.TesTwo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import io.lettuce.core.TimeoutOptions;
+import io.lettuce.core.cluster.ClusterClientOptions;
+import io.lettuce.core.cluster.ClusterTopologyRefreshOptions;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,20 +33,48 @@ import java.util.Map;
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
-    public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory connectionFactory) {
+    public RedisTemplate<?, ?> redisTemplate() {
         RedisTemplate<?, ?> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
+        template.setConnectionFactory(redisConnectionFactory());
 
         return template;
     }
 
     @Bean(name = "redisCacheManager")
-    public RedisCacheManager redisCacheManager(RedisConnectionFactory connectionFactory) {
+    public RedisCacheManager redisCacheManager() {
         return RedisCacheManager.RedisCacheManagerBuilder
-                .fromConnectionFactory(connectionFactory)
+                .fromConnectionFactory(redisConnectionFactory())
                 .cacheDefaults(redisCacheDefaultConfiguration())
                 .withInitialCacheConfigurations(getConfig())
                 .build();
+    }
+
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName("localhost");
+        redisStandaloneConfiguration.setPort(6379);
+        return new LettuceConnectionFactory(redisStandaloneConfiguration ,getLettuceClientConfiguration());
+    }
+
+    private static LettuceClientConfiguration getLettuceClientConfiguration() {
+        return LettuceClientConfiguration.builder()
+                .commandTimeout(Duration.ofMillis(1000))// timeout rule
+                .shutdownTimeout(Duration.ofMillis(1000))  // shutting down time limit
+                .clientOptions(ClusterClientOptions.builder()
+                        .topologyRefreshOptions(ClusterTopologyRefreshOptions.builder()
+                                .enablePeriodicRefresh(Duration.ofMillis(1000)) // refresh node info duration
+                                .enableAllAdaptiveRefreshTriggers()
+                                .adaptiveRefreshTriggersTimeout(Duration.ofMillis(10000))
+                                .build())
+                        .timeoutOptions(TimeoutOptions.enabled())
+                        .build())
+                .build();
+    }
+
+    @Override
+    public CacheErrorHandler errorHandler() {
+        return new CustomCacheErrorHandler();
     }
 
     private RedisCacheConfiguration redisCacheDefaultConfiguration() {
