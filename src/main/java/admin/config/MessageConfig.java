@@ -13,7 +13,7 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 @Slf4j
 @Configuration
 public class MessageConfig {
-
+/*
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory factory, MessageListenerAdapter adapter) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -36,5 +36,5 @@ public class MessageConfig {
     @Bean
     StringRedisTemplate template(RedisConnectionFactory factory) {
         return new StringRedisTemplate(factory);
-    }
+    }*/
 }
