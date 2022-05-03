@@ -15,7 +15,7 @@ public class CustomCacheErrorHandler implements CacheErrorHandler {
         String message = exception.getMessage();
         String cacheName = cache.getName();
         String s = key.toString();
-        log.error("CustomCacheErrorHandler.handleCacheGetError {}, {}, {}", message, cacheName, s);
+
         handlerException(exception);
     }
 
