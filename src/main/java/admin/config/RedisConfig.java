@@ -17,7 +17,6 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisNode;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -54,7 +53,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-
         RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
         RedisNode redisNode = new RedisNode("127.0.0.1", 6379);
         List<RedisNode> nodes = new ArrayList<>();
