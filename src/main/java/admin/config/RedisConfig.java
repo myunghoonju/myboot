@@ -26,7 +26,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +54,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     public RedisConnectionFactory redisConnectionFactory() {
         RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
         RedisNode redisNode = new RedisNode("127.0.0.1", 6379);
-        List<RedisNode> nodes = new ArrayList<>();
-        nodes.add(redisNode);
-        redisClusterConfiguration.setClusterNodes(nodes);
+        redisClusterConfiguration.addClusterNode(redisNode);
         return new LettuceConnectionFactory(redisClusterConfiguration ,getLettuceClientConfiguration());
     }
 
