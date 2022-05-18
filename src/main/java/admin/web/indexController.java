@@ -32,6 +32,9 @@ public class indexController {
 	public String index(Model model, @LoginUser SessionUser sessionUser) {
 		model.addAttribute("posts", postService.findAllDESC());
 		SessionUser user = sessionUser;
+		Tes tes = postService.test2();
+		log.error("tes: {}", tes.getName());
+
 		if (user != null) {
 			model.addAttribute("name", user.getName());
 		}
