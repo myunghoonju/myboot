@@ -95,11 +95,17 @@ public class PostService {
         return mymap;
     }
 
+    public static int cnt = 1;
+
     @Test2CacheGet
     public Tes test2() {
+        cnt++;
         log.error("PostService.test2() called");
         Tes tes = new Tes();
-        tes.setName("tes");
+        tes.setName("old tes");
+        if (cnt > 3) {
+            tes.setName("new tes");
+        }
 
         return tes;
     }

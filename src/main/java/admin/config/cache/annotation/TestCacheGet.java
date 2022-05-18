@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@Cacheable(cacheNames = "store", cacheManager = "redisCacheManager")
+@Cacheable(cacheNames = "store", keyGenerator = "tesKeyGenerator", cacheManager = "redisCacheManager")
 public @interface TestCacheGet {
 }
