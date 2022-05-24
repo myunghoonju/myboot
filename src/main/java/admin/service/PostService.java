@@ -3,7 +3,6 @@ package admin.service;
 import admin.config.cache.annotation.Test2CacheGet;
 import admin.config.cache.annotation.Test3CacheGet;
 import admin.config.cache.annotation.Test4CacheGet;
-import admin.config.cache.annotation.TestCacheGet;
 import admin.domain.dsl.Member;
 import admin.domain.dsl.Team;
 import admin.domain.dsl.TeamTwo;
@@ -17,6 +16,7 @@ import admin.web.dto.PostSaveRequestDto;
 import admin.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final CacheManager cacheManager;
 
     @Transactional
     public Long save(PostSaveRequestDto requestDto) {
@@ -69,10 +70,10 @@ public class PostService {
             .collect(Collectors.toList());
     }
 
-    @TestCacheGet
-    public Map<String, List<Team>> test() {
-        log.error("PostService.test() called");
 
+    public Map<String, List<Team>> test() {
+        log.error("PostService.test() called evict tes");
+        cacheManager.getCache("tes").evict("generatedTestKey");
         Team teamA = Team.builder()
                 .id(1L)
                 .name("teamA")
