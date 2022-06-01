@@ -1,4 +1,4 @@
-package admin.config;
+package admin.config.cache;
 
 import admin.domain.dsl.Team;
 import com.fasterxml.jackson.core.JsonParser;

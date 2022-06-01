@@ -2,6 +2,8 @@ package admin.netty;
 
 import admin.netty.decoder.RequestDecoder;
 import admin.netty.encoder.ResponseEncoder;
+import admin.netty.handler.ChannelHandlerCloseContext;
+import admin.netty.handler.ChannelHandlerFireExceptionCaught;
 import admin.netty.handler.ProcessingHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -34,7 +36,8 @@ public class NettyServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) {
-                            ch.pipeline().addLast(new RequestDecoder(), new ResponseEncoder(), new ProcessingHandler());
+                           // ch.pipeline().addLast(new RequestDecoder(), new ResponseEncoder(), new ProcessingHandler());
+                            ch.pipeline().addLast(new ChannelHandlerFireExceptionCaught(), new ChannelHandlerCloseContext());
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);

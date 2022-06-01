@@ -1,5 +1,8 @@
 package admin.service;
 
+import admin.config.cache.annotation.Test2CacheGet;
+import admin.config.cache.annotation.Test3CacheGet;
+import admin.config.cache.annotation.Test4CacheGet;
 import admin.domain.dsl.Member;
 import admin.domain.dsl.Team;
 import admin.domain.dsl.TeamTwo;
@@ -13,7 +16,7 @@ import admin.web.dto.PostSaveRequestDto;
 import admin.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final CacheManager cacheManager;
 
     @Transactional
     public Long save(PostSaveRequestDto requestDto) {
@@ -66,10 +70,10 @@ public class PostService {
             .collect(Collectors.toList());
     }
 
-    @Cacheable(cacheNames = "store", cacheManager = "redisCacheManager")
-    public Map<String, List<Team>> test() {
-        log.error("PostService.test() called");
 
+    public Map<String, List<Team>> test() {
+        log.error("PostService.test() called evict tes");
+        cacheManager.getCache("tes").evict("generatedTestKey");
         Team teamA = Team.builder()
                 .id(1L)
                 .name("teamA")
@@ -92,18 +96,22 @@ public class PostService {
         return mymap;
     }
 
+    public static int cnt = 1;
 
-
-    @Cacheable(cacheNames = "tes", cacheManager = "redisCacheManager")
+    @Test2CacheGet
     public Tes test2() {
+        cnt++;
         log.error("PostService.test2() called");
         Tes tes = new Tes();
-        tes.setName("tes");
+        tes.setName("old tes");
+        if (cnt > 3) {
+            tes.setName("new tes");
+        }
 
         return tes;
     }
 
-    @Cacheable(cacheNames = "tesTwo", cacheManager = "redisCacheManager")
+    @Test3CacheGet
     public TesTwo test3() {
         log.error("PostService.test2() called");
         TesTwo tes = new TesTwo();
@@ -112,8 +120,7 @@ public class PostService {
         return tes;
     }
 
-
-    @Cacheable(cacheNames = "storeTwo", cacheManager = "redisCacheManager")
+    @Test4CacheGet
     public Map<String, List<TeamTwo>> test4() {
         log.error("PostService.test() called");
 

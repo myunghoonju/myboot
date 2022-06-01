@@ -1,4 +1,4 @@
-package admin.config;
+package admin.config.cache;
 
 import admin.domain.dsl.Team;
 import admin.domain.dsl.TeamTwo;

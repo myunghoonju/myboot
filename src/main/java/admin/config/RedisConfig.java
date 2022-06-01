@@ -1,6 +1,10 @@
 package admin.config;
 
 import admin.config.auth.custom.CustomCacheErrorHandler;
+import admin.config.cache.ListDeSerializer;
+import admin.config.cache.ListTeamTwoDeSerializer;
+import admin.config.cache.TesKeyGenerator;
+import admin.config.cache.TestKeyGenerator;
 import admin.domain.dsl.Tes;
 import admin.domain.dsl.TesTwo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,8 +12,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.lettuce.core.TimeoutOptions;
 import io.lettuce.core.cluster.ClusterClientOptions;
 import io.lettuce.core.cluster.ClusterTopologyRefreshOptions;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.CacheErrorHandler;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.cache.transaction.TransactionAwareCacheDecorator;
+import org.springframework.cache.transaction.TransactionAwareCacheManagerProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -42,12 +50,15 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean(name = "redisCacheManager")
-    public RedisCacheManager redisCacheManager() {
-        return RedisCacheManager.RedisCacheManagerBuilder
+    public CacheManager redisCacheManager() {
+        RedisCacheManager redisCacheManager = RedisCacheManager.RedisCacheManagerBuilder
                 .fromConnectionFactory(redisConnectionFactory())
                 .cacheDefaults(redisCacheDefaultConfiguration())
                 .withInitialCacheConfigurations(getConfig())
                 .build();
+
+        redisCacheManager.initializeCaches();
+        return new TransactionAwareCacheManagerProxy(redisCacheManager);
     }
 
     @Bean
@@ -76,6 +87,16 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public CacheErrorHandler errorHandler() {
         return new CustomCacheErrorHandler();
+    }
+
+    @Bean
+    public KeyGenerator tesKeyGenerator() {
+        return new TesKeyGenerator();
+    }
+
+    @Bean
+    public KeyGenerator testKeyGenerator() {
+        return new TestKeyGenerator();
     }
 
     private RedisCacheConfiguration redisCacheDefaultConfiguration() {
