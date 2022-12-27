@@ -4,6 +4,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,16 +22,16 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue testeQueue() {
-        return new Queue("test", true);
+        return new Queue("testt", false, false, true);
     }
 
     @Bean
-    DirectExchange exchange() {
-        return new DirectExchange("direct-exchange");
+    TopicExchange exchange() {
+        return new TopicExchange("topic-exchange");
     }
 
     @Bean
-    Binding testeBinding(Queue testeQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(testeQueue).to(exchange).with("test-routing-key");
+    Binding testeBinding(Queue testeQueue, TopicExchange exchange) {
+        return BindingBuilder.bind(testeQueue).to(exchange).with("test-routing.#");
     }
 }

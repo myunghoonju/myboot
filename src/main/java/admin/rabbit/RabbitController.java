@@ -24,7 +24,7 @@ public class RabbitController {
 
     @GetMapping("/test")
     public String send() throws JsonProcessingException {
-        template.convertAndSend("test2", "routing-key-test", "test message");
+        template.convertAndSend("topic-exchange", "test-routing.key", "121212");
         return "ok. done";
     }
 }
