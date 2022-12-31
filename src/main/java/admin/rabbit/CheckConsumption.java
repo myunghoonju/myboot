@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class QueueConsumer {
+public class CheckConsumption {
 
     @RabbitListener(queues = {"${queue.name}"})
     public void receive(@Payload String fileBody) {
