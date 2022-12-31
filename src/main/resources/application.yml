@@ -14,34 +14,26 @@ spring:
   datasource:
     hikari:
       jdbc-url: jdbc:h2:tcp://localhost/~/testdb
+
   h2:
     console:
       enabled: true
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
   profiles:
     include: oauth
 
   session:
     store-type: jdbc
-
-  redis:
-    host: 127.0.0.1
-    port: 6379
-
-  multirabbitmq:
-    enabled: true
-    defaultConnection: rabbitmqA
-    connections:
-      rabbitmqA:
-        host: localhost
-        port: 5672
-        username: guest
-        password: guest
-      rabbitmqB:
-        host: localhost
-        port: 5672
-        username: guest
-        password: guest
 
 test:
   host: 127.0.0.1
