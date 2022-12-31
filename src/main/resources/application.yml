@@ -40,4 +40,5 @@ test:
   port: 6666
 
 queue:
-  name: test
+  fname: q.test
+  sname: q.test-sec
