@@ -1,9 +1,10 @@
 package admin.config.amqp;
 
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,7 +27,7 @@ public class RabbitConfig {
     public ConnectionFactory secondConnection() {
         CachingConnectionFactory conn = new CachingConnectionFactory();
         conn.setHost("localhost");
-        conn.setPort(5672);
+        conn.setPort(5673);
         conn.setUsername("guest");
         conn.setPassword("guest");
         return conn;
@@ -34,21 +35,26 @@ public class RabbitConfig {
 
     @Bean
     public RabbitTemplate firstRabbit() {
-        RabbitTemplate firTemp = new RabbitTemplate(firstConnection());
-        firTemp.setMessageConverter(converter());
-
-        return firTemp;
+        return new RabbitTemplate(firstConnection());
     }
     @Bean
     public RabbitTemplate secondRabbit() {
-        RabbitTemplate secTemp = new RabbitTemplate(secondConnection());
-        secTemp.setMessageConverter(converter());
-
-        return secTemp;
+        return new RabbitTemplate(secondConnection());
     }
 
     @Bean
-    public Jackson2JsonMessageConverter converter() {
-        return new Jackson2JsonMessageConverter();
+    public AmqpAdmin firstAmqpAdmin() {
+        RabbitAdmin firstAdmin = new RabbitAdmin(firstRabbit());
+        firstAdmin.afterPropertiesSet();
+
+        return firstAdmin;
+    }
+
+    @Bean
+    public AmqpAdmin secondAmqpAdmin() {
+        RabbitAdmin secRabbitAdmin = new RabbitAdmin(secondRabbit());
+        secRabbitAdmin.afterPropertiesSet();
+
+        return secRabbitAdmin;
     }
 }

@@ -1,10 +1,9 @@
-package admin.rabbit;
+package admin.rabbit.template;
 
-import admin.config.amqp.TopicExchangeConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
-import static admin.config.amqp.TopicExchangeConfig.TOPIC_EXCHANGE_NAME;
+import static admin.config.amqp.exchange.TopicExchangeConfig.TOPIC_EXCHANGE_NAME;
 
 @Service
 public class RabbitFTemplateWrapper {
@@ -15,7 +14,7 @@ public class RabbitFTemplateWrapper {
         this.firstRabbit = firstRabbit;
     }
 
-    public void sendMsg(String key) {
-        firstRabbit.convertAndSend(TOPIC_EXCHANGE_NAME, key, "messgesA");
+    public void sendMsg(String key, String msg) {
+        firstRabbit.convertAndSend(TOPIC_EXCHANGE_NAME, key, msg);
     }
 }

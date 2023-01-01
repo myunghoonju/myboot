@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CheckConsumption {
 
-    @RabbitListener(queues = {"${queue.fname}"})
+    //@RabbitListener(queues = {"${queue.fname}"})
     public void receive(@Payload String fileBody) {
         log.info("Message fir " + fileBody);
     }
 
-    @RabbitListener(queues = {"${queue.sname}"})
+    //@RabbitListener(queues = {"${queue.sname}"})
     public void receivesec(@Payload String fileBody) {
         log.info("Message sec " + fileBody);
     }
