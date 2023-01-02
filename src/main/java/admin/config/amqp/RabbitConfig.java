@@ -47,13 +47,11 @@ public class RabbitConfig {
 
     @Bean
     public AmqpAdmin firstAmqpAdmin() {
-        RabbitAdmin firstAdmin = new RabbitAdmin(firstRabbit());
-        return firstAdmin;
+        return new RabbitAdmin(firstRabbit());
     }
 
     @Bean
     public AmqpAdmin secondAmqpAdmin() {
-        RabbitAdmin secRabbitAdmin = new RabbitAdmin(secondRabbit());
-        return secRabbitAdmin;
+        return new RabbitAdmin(secondRabbit());
     }
 }
