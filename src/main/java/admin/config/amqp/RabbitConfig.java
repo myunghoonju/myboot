@@ -5,10 +5,13 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableAutoConfiguration(exclude = {RabbitAutoConfiguration.class})
 public class RabbitConfig {
 
     //TODO:: inject server info beans
@@ -45,16 +48,12 @@ public class RabbitConfig {
     @Bean
     public AmqpAdmin firstAmqpAdmin() {
         RabbitAdmin firstAdmin = new RabbitAdmin(firstRabbit());
-        firstAdmin.afterPropertiesSet();
-
         return firstAdmin;
     }
 
     @Bean
     public AmqpAdmin secondAmqpAdmin() {
         RabbitAdmin secRabbitAdmin = new RabbitAdmin(secondRabbit());
-        secRabbitAdmin.afterPropertiesSet();
-
         return secRabbitAdmin;
     }
 }

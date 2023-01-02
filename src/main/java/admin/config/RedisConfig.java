@@ -49,7 +49,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         return template;
     }
 
-    @Bean(name = "redisCacheManager")
+    @Bean
     public CacheManager redisCacheManager() {
         RedisCacheManager redisCacheManager = RedisCacheManager.RedisCacheManagerBuilder
                 .fromConnectionFactory(redisConnectionFactory())

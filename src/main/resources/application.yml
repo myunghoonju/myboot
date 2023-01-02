@@ -35,6 +35,10 @@ spring:
   session:
     store-type: jdbc
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 test:
   host: 127.0.0.1
   port: 6666
