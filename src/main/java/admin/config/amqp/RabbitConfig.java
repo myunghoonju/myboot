@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static org.springframework.amqp.rabbit.connection.CachingConnectionFactory.ConfirmType.SIMPLE;
+
 @Configuration
 @EnableAutoConfiguration(exclude = {RabbitAutoConfiguration.class})
 public class RabbitConfig {
@@ -23,6 +25,7 @@ public class RabbitConfig {
         conn.setPort(5672);
         conn.setUsername("guest");
         conn.setPassword("guest");
+        conn.setPublisherConfirmType(SIMPLE);
         return conn;
     }
 

@@ -15,6 +15,11 @@ public class RabbitFTemplateWrapper {
     }
 
     public void sendMsg(String key, String msg) {
-        firstRabbit.convertAndSend(TOPIC_EXCHANGE_NAME, key, msg);
+        Boolean isSent = firstRabbit.invoke(ops -> {
+            ops.convertAndSend(TOPIC_EXCHANGE_NAME, key, msg);
+            return ops.waitForConfirms(1000);
+        });
+
+        System.out.println("SENT RESULT:: " + isSent);
     }
 }
