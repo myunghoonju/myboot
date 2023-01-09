@@ -5,8 +5,6 @@ import org.springframework.amqp.AmqpTimeoutException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.TimeoutException;
-
 import static admin.config.amqp.exchange.TopicExchangeConfig.TOPIC_EXCHANGE_NAME;
 import static java.lang.Boolean.TRUE;
 
