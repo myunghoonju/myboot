@@ -11,7 +11,6 @@ public class QueueConfig {
 
     private static final String QUEUE_NAME = "q.topic.test";
     private static final String QUEUE_NAME_SEC = "q.test-sec";
-    private static final String QUEUE_NAME_THIRD = "q.test-third";
 
     @Bean
     public Queue testQueue(AmqpAdmin firstAmqpAdmin) {
