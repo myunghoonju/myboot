@@ -5,6 +5,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarable;
 import org.springframework.amqp.core.Declarables;
+import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
@@ -15,15 +16,14 @@ public class TopicExchangeConfig {
 
     public static final String TOPIC_EXCHANGE_NAME = "x.test-topic";
     public static final String TOPIC_EXCHANGE_NAME_SEC = "x.test-topic-sec";
-    public static final String TOPIC_EXCHANGE_NAME_THIRD = "x.test-topic-third";
 
     public static final String BINDING_PATTERN = "*.important";
     public static final String BINDING_PATTERN_SEC = "*.ordinary.*";
-    public static final String BINDING_PATTERN_THIRD = "*.negligible.*";
 
     @Bean
     public TopicExchange topicExchange(AmqpAdmin firstAmqpAdmin) {
-        TopicExchange topicExchange = new TopicExchange(TOPIC_EXCHANGE_NAME, true, false);
+        TopicExchange topicExchange = ExchangeBuilder.topicExchange(TOPIC_EXCHANGE_NAME)
+                                                     .build();
         topicExchange.setAdminsThatShouldDeclare(firstAmqpAdmin);
 
         return topicExchange;
@@ -31,18 +31,11 @@ public class TopicExchangeConfig {
 
     @Bean
     public TopicExchange topicExchangeSec(AmqpAdmin secondAmqpAdmin) {
-        TopicExchange topicExchangeSec = new TopicExchange(TOPIC_EXCHANGE_NAME_SEC, true, false);
-        topicExchangeSec.setAdminsThatShouldDeclare(secondAmqpAdmin);
+        TopicExchange topicExchange = ExchangeBuilder.topicExchange(TOPIC_EXCHANGE_NAME_SEC)
+                                                     .build();
+        topicExchange.setAdminsThatShouldDeclare(secondAmqpAdmin);
 
-        return topicExchangeSec;
-    }
-
-    @Bean
-    public TopicExchange topicExchangeThird(AmqpAdmin secondAmqpAdmin) {
-        TopicExchange topicExchangeThird = new TopicExchange(TOPIC_EXCHANGE_NAME_THIRD, true, false);
-        topicExchangeThird.setAdminsThatShouldDeclare(secondAmqpAdmin);
-
-        return topicExchangeThird;
+        return topicExchange;
     }
 
     @Bean
@@ -50,10 +43,8 @@ public class TopicExchangeConfig {
                                      AmqpAdmin secondAmqpAdmin,
                                      TopicExchange topicExchange,
                                      TopicExchange topicExchangeSec,
-                                     TopicExchange topicExchangeThird,
                                      Queue testQueue,
-                                     Queue testQueueSec,
-                                     Queue testQueueThird) {
+                                     Queue testQueueSec) {
         return new Declarables(getDeclarable(firstAmqpAdmin,
                                              testQueue,
                                              topicExchange,
@@ -61,11 +52,7 @@ public class TopicExchangeConfig {
                                getDeclarable(secondAmqpAdmin,
                                              testQueueSec,
                                              topicExchangeSec,
-                                             BINDING_PATTERN_SEC),
-                               getDeclarable(secondAmqpAdmin,
-                                             testQueueThird,
-                                             topicExchangeThird,
-                                             BINDING_PATTERN_THIRD));
+                                             BINDING_PATTERN_SEC));
     }
 
     private Declarable getDeclarable(AmqpAdmin amqpAdmin,
