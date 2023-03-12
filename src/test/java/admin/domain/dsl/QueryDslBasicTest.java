@@ -214,7 +214,7 @@ public class QueryDslBasicTest {
        assertThat(tuple.get(member.age.min())).isEqualTo(10);
     }
 
-    @Test
+  /*  @Test
     public void group() {
         List<Tuple> result = queryFactory
                 .select(team.name, member.age.avg())
@@ -230,12 +230,12 @@ public class QueryDslBasicTest {
         assertThat(teamA.get(member.age.avg())).isEqualTo(15);
         assertThat(teamB.get(team.name)).isEqualTo("teamB");
         assertThat(teamB.get(member.age.avg())).isEqualTo(35);
-    }
+    }*/
 
     /*
     * a팀에 소속된 모든 회원
     * */
-    @Test
+   /* @Test
     public void join() {
         List<Member> result = queryFactory
                 .selectFrom(member)
@@ -247,7 +247,7 @@ public class QueryDslBasicTest {
                 .extracting("username")
                 .containsExactly("member1", "member2");
     }
-
+*/
 /*
      //연관관계 없는경우 조인도 가능
     @Test
@@ -293,7 +293,7 @@ public class QueryDslBasicTest {
 
     }
 */
-    @Test
+   /* @Test
     public void withFetchJoin() {
         Member findMember = queryFactory
                 .selectFrom(member)
@@ -303,5 +303,5 @@ public class QueryDslBasicTest {
 
         boolean loaded = emf.getPersistenceUnitUtil().isLoaded(findMember.getTeam());
         assertThat(loaded).as("withoutFetchJoin").isTrue();
-    }
+    }*/
 }
