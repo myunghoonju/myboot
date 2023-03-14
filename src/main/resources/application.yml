@@ -28,6 +28,8 @@ spring:
     port: 5672
     username: guest
     password: guest
+    #TODO:: not working find out why
+    dynamic: true
 
   profiles:
     include: oauth

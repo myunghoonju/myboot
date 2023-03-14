@@ -20,7 +20,8 @@ public class RabbitPublishService {
         rabbitFTemplateWrapper.sendMsg(key, msg);
     }
 
-    public void sendMsgSec(String key, String msg) {
-        rabbitSTemplateWrapper.sendMsgSec(key, msg);
+    public void sendMsg2(String msg) {
+        rabbitFTemplateWrapper.sendMsg2(msg);
     }
+
 }

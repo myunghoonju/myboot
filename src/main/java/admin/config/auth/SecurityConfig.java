@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.headers().frameOptions().disable()// for h2-console
 			.and()
 				.authorizeRequests() // to use antMatchers
-				.antMatchers("/","/h2-console/**","/profile/","/css/**", "/images/**", "/js/**", "/a").permitAll()
+				.antMatchers("/","/h2-console/**","/profile/","/css/**", "/images/**", "/js/**", "/a", "/test").permitAll()
 				.antMatchers("/api/v1/**").hasRole(Role.USER.name()) // only User
 				.anyRequest().authenticated()
 			.and()

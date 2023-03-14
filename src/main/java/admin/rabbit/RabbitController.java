@@ -14,6 +14,7 @@ public class RabbitController {
     @GetMapping("/test")
     public String send() {
         rabbitPublishService.sendMsg("a.important", "message from test");
+        rabbitPublishService.sendMsg2("message from test2");
 
         return "done";
     }
