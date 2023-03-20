@@ -1,18 +1,18 @@
 package admin.rabbit.template;
 
-import admin.config.amqp.exchange.FanOutExchangeConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpTimeoutException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
-import static admin.config.amqp.exchange.FanOutExchangeConfig.FANOUT_EXCHANGE_NAME;
 import static admin.config.amqp.exchange.TopicExchangeConfig.TOPIC_EXCHANGE_NAME;
 import static java.lang.Boolean.TRUE;
 
 @Slf4j
 @Service
 public class RabbitFTemplateWrapper {
+
+    private static final String FANOUT_EXCHANGE_NAME = "x.test-fanout";
 
     private final RabbitTemplate firstRabbit;
 

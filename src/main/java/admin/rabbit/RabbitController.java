@@ -2,6 +2,7 @@ package admin.rabbit;
 
 import admin.rabbit.service.RabbitPublishService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,9 +14,7 @@ public class RabbitController {
 
     @GetMapping("/test")
     public String send() {
-        rabbitPublishService.sendMsg("a.important", "message from test");
-        rabbitPublishService.sendMsg2("message from test2");
-
-        return "done";
+        rabbitPublishService.fanoutTest("message from fanoutTest");
+        return HttpStatus.OK.name();
     }
 }

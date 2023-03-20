@@ -17,8 +17,6 @@ import static org.springframework.amqp.rabbit.connection.CachingConnectionFactor
 @EnableAutoConfiguration(exclude = {RabbitAutoConfiguration.class})
 public class RabbitConfig {
 
-    //TODO:: inject server info beans
-
     @Bean
     public ConnectionFactory firstConnection() {
         CachingConnectionFactory conn = new CachingConnectionFactory();

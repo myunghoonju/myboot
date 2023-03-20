@@ -20,7 +20,7 @@ public class RabbitPublishService {
         rabbitFTemplateWrapper.sendMsg(key, msg);
     }
 
-    public void sendMsg2(String msg) {
+    public void fanoutTest(String msg) {
         rabbitFTemplateWrapper.sendMsg2(msg);
     }
 
