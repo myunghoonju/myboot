@@ -17,14 +17,18 @@ import static org.springframework.amqp.rabbit.connection.CachingConnectionFactor
 @EnableAutoConfiguration(exclude = {RabbitAutoConfiguration.class})
 public class RabbitConfig {
 
+    public static CachingConnectionFactory getCachingConnectionFactoryFactory() {
+       return new CachingConnectionFactory();
+    }
+
     @Bean
     public ConnectionFactory firstConnection() {
-        CachingConnectionFactory conn = new CachingConnectionFactory();
+        CachingConnectionFactory conn = getCachingConnectionFactoryFactory();
         conn.setHost("localhost");
         conn.setPort(5672);
         conn.setUsername("guest");
         conn.setPassword("guest");
-        conn.setPublisherConfirmType(SIMPLE);
+        conn.setPublisherConfirmType(SIMPLE); // ?
         return conn;
     }
 
