@@ -36,7 +36,7 @@ public class RabbitConfig {
     public ConnectionFactory secondConnection() {
         CachingConnectionFactory conn = new CachingConnectionFactory();
         conn.setHost("localhost");
-        conn.setPort(5673);
+        conn.setPort(5672);
         conn.setUsername("guest");
         conn.setPassword("guest");
         return conn;

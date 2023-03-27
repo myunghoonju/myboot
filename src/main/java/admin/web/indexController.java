@@ -3,9 +3,6 @@ package admin.web;
 import admin.config.auth.custom.annotation.LoginUser;
 import admin.config.auth.dto.SessionUser;
 import admin.domain.dsl.Team;
-import admin.domain.dsl.TeamTwo;
-import admin.domain.dsl.Tes;
-import admin.domain.dsl.TesTwo;
 import admin.service.PostService;
 import admin.web.dto.PostListResponseDto;
 import admin.web.dto.PostResponseDto;
@@ -30,15 +27,6 @@ public class indexController {
 
 	@GetMapping("/")
 	public String index(Model model, @LoginUser SessionUser sessionUser) {
-		model.addAttribute("posts", postService.findAllDESC());
-		SessionUser user = sessionUser;
-		Tes tes = postService.test2();
-		log.error("tes: {}", tes.getName());
-
-		if (user != null) {
-			model.addAttribute("name", user.getName());
-		}
-
 		return "index";
 	}
 
