@@ -42,6 +42,12 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 test:
   host: 127.0.0.1
   port: 6666
