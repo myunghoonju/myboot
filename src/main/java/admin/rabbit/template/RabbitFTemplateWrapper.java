@@ -12,7 +12,7 @@ import static java.lang.Boolean.TRUE;
 @Service
 public class RabbitFTemplateWrapper {
 
-    private static final String FANOUT_EXCHANGE_NAME = "x.test-fanout";
+    private static final String FANOUT_EXCHANGE_NAME = "amq.fanout";
 
     private final RabbitTemplate firstRabbit;
 
