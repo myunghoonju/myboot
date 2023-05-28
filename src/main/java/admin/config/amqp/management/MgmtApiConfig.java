@@ -11,6 +11,9 @@ import java.util.Base64;
 @Configuration
 public class MgmtApiConfig {
 
+    public static final String API_QUEUE_LIST = "http://localhost:15672/api/queues";
+    public static final String API_BIND_LIST = "http://localhost:15672/api/exchanges/%2f/x.test-topic/bindings/source";
+
     @Bean
     public HttpClient amqpHttpClient() {
         return HttpClient.newBuilder()
