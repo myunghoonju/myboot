@@ -14,7 +14,7 @@ public class RabbitController {
 
     @GetMapping("/test")
     public String send() {
-        rabbitPublishService.fanoutTest("message from fanoutTest");
+        rabbitPublishService.sendMsg("a.important", "message from test");
         return HttpStatus.OK.name();
     }
 }

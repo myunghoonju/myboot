@@ -8,6 +8,7 @@ import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,13 +16,12 @@ import org.springframework.context.annotation.Configuration;
 public class TopicExchangeConfig {
 
     public static final String TOPIC_EXCHANGE_NAME = "x.test-topic";
-    public static final String TOPIC_EXCHANGE_NAME_SEC = "x.test-topic-sec";
-
     public static final String BINDING_PATTERN = "*.important";
-    public static final String BINDING_PATTERN_SEC = "*.ordinary.*";
+    @Autowired
+    public AmqpAdmin firstAmqpAdmin;
 
     @Bean
-    public TopicExchange topicExchange(AmqpAdmin firstAmqpAdmin) {
+    public TopicExchange topicExchange() {
         TopicExchange topicExchange = ExchangeBuilder.topicExchange(TOPIC_EXCHANGE_NAME)
                                                      .build();
         topicExchange.setAdminsThatShouldDeclare(firstAmqpAdmin);
@@ -30,32 +30,16 @@ public class TopicExchangeConfig {
     }
 
     @Bean
-    public TopicExchange topicExchangeSec(AmqpAdmin secondAmqpAdmin) {
-        TopicExchange topicExchange = ExchangeBuilder.topicExchange(TOPIC_EXCHANGE_NAME_SEC)
-                                                     .build();
-        topicExchange.setAdminsThatShouldDeclare(secondAmqpAdmin);
-
-        return topicExchange;
-    }
-
-    @Bean
     public Declarables topicBindings(AmqpAdmin firstAmqpAdmin,
-                                     AmqpAdmin secondAmqpAdmin,
                                      TopicExchange topicExchange,
-                                     TopicExchange topicExchangeSec,
-                                     Queue testQueue,
-                                     Queue testQueueSec) {
+                                     Queue testQueue) {
         return new Declarables(getDeclarable(firstAmqpAdmin,
                                              testQueue,
                                              topicExchange,
-                                             BINDING_PATTERN),
-                               getDeclarable(secondAmqpAdmin,
-                                             testQueueSec,
-                                             topicExchangeSec,
-                                             BINDING_PATTERN_SEC));
+                                             BINDING_PATTERN));
     }
 
-    private Declarable getDeclarable(AmqpAdmin amqpAdmin,
+    public static Declarable getDeclarable(AmqpAdmin amqpAdmin,
                                      Queue queue,
                                      TopicExchange exchange,
                                      String pattern) {

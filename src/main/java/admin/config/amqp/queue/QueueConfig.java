@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 public class QueueConfig {
 
     private static final String QUEUE_NAME = "q.topic.test";
-    private static final String QUEUE_NAME_SEC = "q.test-sec";
 
     @Bean
     public Queue testQueue(AmqpAdmin firstAmqpAdmin) {
@@ -20,15 +19,5 @@ public class QueueConfig {
         testQueue.setAdminsThatShouldDeclare(firstAmqpAdmin);
 
         return testQueue;
-    }
-
-    @Bean
-    public Queue testQueueSec(AmqpAdmin secondAmqpAdmin) {
-        Queue test2 = QueueBuilder.durable(QUEUE_NAME_SEC)
-                                  .quorum()
-                                  .build();
-        test2.setAdminsThatShouldDeclare(secondAmqpAdmin);
-
-        return test2;
     }
 }

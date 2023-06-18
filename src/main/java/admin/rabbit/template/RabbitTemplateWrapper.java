@@ -10,13 +10,13 @@ import static java.lang.Boolean.TRUE;
 
 @Slf4j
 @Service
-public class RabbitFTemplateWrapper {
+public class RabbitTemplateWrapper {
 
     private static final String FANOUT_EXCHANGE_NAME = "amq.fanout";
 
     private final RabbitTemplate firstRabbit;
 
-    public RabbitFTemplateWrapper(RabbitTemplate firstRabbit) {
+    public RabbitTemplateWrapper(RabbitTemplate firstRabbit) {
         this.firstRabbit = firstRabbit;
     }
 

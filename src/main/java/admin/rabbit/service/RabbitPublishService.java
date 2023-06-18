@@ -1,27 +1,23 @@
 package admin.rabbit.service;
 
-import admin.rabbit.template.RabbitFTemplateWrapper;
-import admin.rabbit.template.RabbitSTemplateWrapper;
+import admin.rabbit.template.RabbitTemplateWrapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RabbitPublishService {
 
-    private final RabbitFTemplateWrapper rabbitFTemplateWrapper;
-    private final RabbitSTemplateWrapper rabbitSTemplateWrapper;
+    private final RabbitTemplateWrapper rabbitTemplateWrapper;
 
-    public RabbitPublishService(RabbitFTemplateWrapper rabbitFTemplateWrapper,
-                                RabbitSTemplateWrapper rabbitSTemplateWrapper) {
-        this.rabbitFTemplateWrapper = rabbitFTemplateWrapper;
-        this.rabbitSTemplateWrapper = rabbitSTemplateWrapper;
+    public RabbitPublishService(RabbitTemplateWrapper rabbitTemplateWrapper) {
+        this.rabbitTemplateWrapper = rabbitTemplateWrapper;
     }
 
     public void sendMsg(String key, String msg) {
-        rabbitFTemplateWrapper.sendMsg(key, msg);
+        rabbitTemplateWrapper.sendMsg(key, msg);
     }
 
     public void fanoutTest(String msg) {
-        rabbitFTemplateWrapper.sendMsg2(msg);
+        rabbitTemplateWrapper.sendMsg2(msg);
     }
 
 }
