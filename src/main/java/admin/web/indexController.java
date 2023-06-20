@@ -6,21 +6,19 @@ import admin.domain.dsl.Team;
 import admin.service.PostService;
 import admin.web.dto.PostListResponseDto;
 import admin.web.dto.PostResponseDto;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class indexController {
 
 	private final PostService postService;
@@ -53,5 +51,26 @@ public class indexController {
 		PostResponseDto dto = postService.findById(id);
 		model.addAttribute("post", dto);
 		return "update-post";
+	}
+
+	@PostMapping("/myboot")
+	public TestModel fromPractice(@RequestBody TestModel testModel) {
+		System.out.println(testModel.toString());
+
+		return testModel;
+	}
+
+	@ToString
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	static class TestModel {
+		private String key;
+		private String  val;
+
+		public TestModel(String key, String val) {
+			this.key = key;
+			this.val = val;
+		}
 	}
 }

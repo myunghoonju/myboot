@@ -35,10 +35,11 @@ public class RabbitConfig {
         conn.setPort(5672);
         conn.setUsername("guest");
         conn.setPassword("guest");
-        conn.setConnectionTimeout(0);
         conn.addConnectionListener(connectListen);
         conn.setPublisherConfirmType(SIMPLE);
-        conn.setCloseTimeout(0);
+        conn.setConnectionTimeout(1000);
+        conn.setCloseTimeout(1000);
+        conn.setRequestedHeartBeat(5);
         conn.setCacheMode(CONNECTION);
 
         return conn;
