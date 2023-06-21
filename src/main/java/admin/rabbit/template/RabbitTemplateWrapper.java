@@ -1,7 +1,12 @@
 package admin.rabbit.template;
 
+import admin.config.amqp.exchange.TopicExchangeConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.AmqpTimeoutException;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +21,18 @@ public class RabbitTemplateWrapper {
 
     private final RabbitTemplate firstRabbit;
 
-    public RabbitTemplateWrapper(RabbitTemplate firstRabbit) {
+    private final AmqpAdmin firstAmqpAdmin;
+
+    public RabbitTemplateWrapper(RabbitTemplate firstRabbit, AmqpAdmin firstAmqpAdmin) {
         this.firstRabbit = firstRabbit;
+        this.firstAmqpAdmin = firstAmqpAdmin;
     }
 
     public void sendMsg(String key, String msg) {
         try {
             boolean isSent = sendAndConfirm(key, msg);
             log.info("sent result {}", isSent);
-        } catch (AmqpTimeoutException e) {
+        } catch (AmqpException e) {
             log.error("sent failed {}", e.getMessage());
         }
 
@@ -56,5 +64,10 @@ public class RabbitTemplateWrapper {
                     return ops.waitForConfirms(1000);
                 })
         );
+    }
+    
+    public void buildTopicExchange() {
+        Exchange build = ExchangeBuilder.topicExchange(TopicExchangeConfig.TOPIC_EXCHANGE_NAME).build();
+        firstAmqpAdmin.declareExchange(build);
     }
 }

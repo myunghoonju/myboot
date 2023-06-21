@@ -38,7 +38,6 @@ public class RabbitConfig {
         conn.addConnectionListener(connectListen);
         conn.setPublisherConfirmType(SIMPLE);
         conn.setConnectionTimeout(1000);
-        conn.setCloseTimeout(1000);
         conn.setRequestedHeartBeat(5);
         conn.setCacheMode(CONNECTION);
 
@@ -55,7 +54,10 @@ public class RabbitConfig {
 
     @Bean
     public AmqpAdmin firstAmqpAdmin() {
-        return new RabbitAdmin(firstRabbit());
+        RabbitAdmin rabbitAdmin = new RabbitAdmin(firstRabbit());
+        rabbitAdmin.setRedeclareManualDeclarations(true);
+
+        return rabbitAdmin;
     }
 
     @Bean

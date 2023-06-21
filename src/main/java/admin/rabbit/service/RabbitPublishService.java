@@ -13,11 +13,7 @@ public class RabbitPublishService {
     }
 
     public void sendMsg(String key, String msg) {
+        rabbitTemplateWrapper.buildTopicExchange();
         rabbitTemplateWrapper.sendMsg(key, msg);
     }
-
-    public void fanoutTest(String msg) {
-        rabbitTemplateWrapper.sendMsg2(msg);
-    }
-
 }
