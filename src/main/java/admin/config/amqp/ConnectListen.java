@@ -30,6 +30,6 @@ public class ConnectListen implements ConnectionListener {
     @Override
     public void onFailed(Exception exception) {
         log.info("onFailed {}", exception.getMessage());
-
+        throw new AmqpException("fail to send message");
     }
 }
