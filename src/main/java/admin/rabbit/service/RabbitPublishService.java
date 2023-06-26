@@ -13,7 +13,7 @@ public class RabbitPublishService {
     }
 
     public void sendMsg(String key, String msg) {
-        rabbitTemplateWrapper.buildTopicExchange();
+       // rabbitTemplateWrapper.buildTopicExchange();
         rabbitTemplateWrapper.sendMsg(key, msg);
     }
 }

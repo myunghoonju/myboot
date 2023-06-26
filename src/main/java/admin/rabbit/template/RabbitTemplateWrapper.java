@@ -34,6 +34,7 @@ public class RabbitTemplateWrapper {
             log.info("sent result {}", isSent);
         } catch (AmqpException e) {
             log.error("sent failed {}", e.getMessage());
+            throw new AmqpException(e.getMessage());
         }
 
     }

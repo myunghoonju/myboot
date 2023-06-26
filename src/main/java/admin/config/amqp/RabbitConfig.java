@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static org.springframework.amqp.rabbit.connection.CachingConnectionFactory.CacheMode.CONNECTION;
 import static org.springframework.amqp.rabbit.connection.CachingConnectionFactory.ConfirmType.SIMPLE;
 
 @Configuration
@@ -30,6 +29,8 @@ public class RabbitConfig {
 
     @Bean
     public ConnectionFactory firstConnection() {
+
+
         CachingConnectionFactory conn = getCachingConnectionFactoryFactory();
         conn.setHost("localhost");
         conn.setPort(5672);
@@ -37,10 +38,10 @@ public class RabbitConfig {
         conn.setPassword("guest");
         conn.addConnectionListener(connectListen);
         conn.setPublisherConfirmType(SIMPLE);
-        conn.setConnectionTimeout(1000);
-        conn.setRequestedHeartBeat(2);
-        conn.setCacheMode(CONNECTION);
-        //conn.setRecoveryListener();
+        conn.setConnectionTimeout(1000); // connection TCP establishment timeout in milliseconds
+        //conn.setRequestedHeartBeat(30);
+        conn.setCloseTimeout(1000); // How long to wait (milliseconds) for a response to a connection close operation from the broker
+        //conn.setCacheMode(CONNECTION);
 
         return conn;
     }
