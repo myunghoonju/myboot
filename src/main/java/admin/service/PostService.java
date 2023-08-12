@@ -10,10 +10,7 @@ import admin.domain.dsl.Tes;
 import admin.domain.dsl.TesTwo;
 import admin.domain.post.Post;
 import admin.domain.post.PostRepository;
-import admin.web.dto.PostListResponseDto;
-import admin.web.dto.PostResponseDto;
-import admin.web.dto.PostSaveRequestDto;
-import admin.web.dto.PostUpdateRequestDto;
+import admin.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
@@ -46,6 +43,11 @@ public class PostService {
         post.update(postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent());
 
         return id;
+    }
+
+    @Transactional
+    public Long catchFakeStories(List<String> dtos) {
+        return postRepository.batchUpdate(dtos);
     }
 
     @Transactional

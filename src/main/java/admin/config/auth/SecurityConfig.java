@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	public static final String[] ANTMATCHERS = {"/", "/h2-console/**", "/profile/", "/css/**", "/images/**", "/js/**", "/a", "/test", "/actuator/**", "/amqp/**", "/myboot", "/api/**"};
+
 	private final CustomOAuth2UserService customOAuth2UserService;
 
 	@Override
@@ -21,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.headers().frameOptions().disable()// for h2-console
 			.and()
 				.authorizeRequests() // to use antMatchers
-				.antMatchers("/","/h2-console/**","/profile/","/css/**", "/images/**", "/js/**", "/a", "/test", "/actuator/**", "/amqp/**", "/myboot").permitAll()
+				.antMatchers(ANTMATCHERS).permitAll()
 				.antMatchers("/api/v1/**").hasRole(Role.USER.name()) // only User
 				.anyRequest().authenticated()
 			.and()

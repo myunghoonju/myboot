@@ -1,6 +1,7 @@
 package admin.web;
 
 import admin.service.PostService;
+import admin.web.dto.PostBatchUpdateRequestDto;
 import admin.web.dto.PostResponseDto;
 import admin.web.dto.PostSaveRequestDto;
 import admin.web.dto.PostUpdateRequestDto;
@@ -28,6 +29,11 @@ public class PostApiController {
     @PutMapping("/api/v1/post/{id}")
     public Long update(@PathVariable Long id, @RequestBody PostUpdateRequestDto postUpdateRequestDto) {
         return postService.update(id, postUpdateRequestDto);
+    }
+
+    @PutMapping("/api/v1/put")
+    public Long catchFakeStories(@RequestBody PostBatchUpdateRequestDto requestDto) {
+        return postService.catchFakeStories(requestDto.getAuthors());
     }
 
     @DeleteMapping("/api/v1/post/{id}")
