@@ -25,4 +25,12 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
                            .where(post.author.in(authors))
                            .execute();
     }
+
+    @Override
+    public Long batchAgeUpdate(List<Long> ages) {
+        return queryFactory.update(post)
+                           .set(post.content, MARK_FAKE_STORY)
+                           .where(post.age.in(ages))
+                           .execute();
+    }
 }

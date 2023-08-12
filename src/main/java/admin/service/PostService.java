@@ -46,8 +46,13 @@ public class PostService {
     }
 
     @Transactional
-    public Long catchFakeStories(List<String> dtos) {
-        return postRepository.batchUpdate(dtos);
+    public Long catchFakeStories(List<String> authors) {
+        return postRepository.batchUpdate(authors);
+    }
+
+    @Transactional
+    public Long catchFakeStoriesWithAge(List<Long> ages) {
+        return postRepository.batchAgeUpdate(ages);
     }
 
     @Transactional

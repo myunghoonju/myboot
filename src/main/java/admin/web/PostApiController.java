@@ -31,9 +31,14 @@ public class PostApiController {
         return postService.update(id, postUpdateRequestDto);
     }
 
-    @PutMapping("/api/v1/put")
+    @PutMapping("/api/v1/authors")
     public Long catchFakeStories(@RequestBody PostBatchUpdateRequestDto requestDto) {
         return postService.catchFakeStories(requestDto.getAuthors());
+    }
+
+    @PutMapping("/api/v1/ages")
+    public Long catchFakeStoriesWithAge(@RequestBody PostBatchUpdateRequestDto requestDto) {
+        return postService.catchFakeStoriesWithAge(requestDto.getAges());
     }
 
     @DeleteMapping("/api/v1/post/{id}")
