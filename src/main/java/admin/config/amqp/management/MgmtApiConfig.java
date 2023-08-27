@@ -12,7 +12,7 @@ import java.util.Base64;
 public class MgmtApiConfig {
 
     public static final String API_QUEUE_LIST = "http://localhost:15672/api/queues";
-    public static final String API_BIND_LIST = "http://localhost:15672/api/exchanges/%2f/x.test-topic/bindings/source";
+    public static final String API_BIND_LIST = "http://localhost:15672/api/exchanges/%2F/x.test-fanout/bindings/source";
 
     @Bean
     public HttpClient amqpHttpClient() {
@@ -24,5 +24,9 @@ public class MgmtApiConfig {
     public static String localAuth() {
         String credential = "guest:guest";
         return "Basic " + Base64.getEncoder().encodeToString(credential.getBytes());
+    }
+
+    public static void main(String[] args) {
+        System.out.println(localAuth());
     }
 }

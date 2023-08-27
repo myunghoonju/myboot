@@ -1,5 +1,6 @@
 package admin.rabbit.service;
 
+import admin.web.dto.XTestFanOutQueue;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static admin.config.amqp.management.MgmtApiConfig.*;
@@ -34,10 +34,10 @@ public class RabbitMgmtApiService {
     public String getName() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(new URI(API_QUEUE_LIST))
-                    .header(AUTHORIZATION, localAuth())
-                    .build();
+                                         .GET()
+                                         .uri(new URI(API_QUEUE_LIST))
+                                         .header(AUTHORIZATION, localAuth())
+                                         .build();
             HttpResponse<String> response = amqpHttpClient.send(req, HttpResponse.BodyHandlers.ofString());
             JsonNode jsonNode = mapper.readTree(response.body());
             return jsonNode.path(0).path("name").asText();
@@ -49,16 +49,16 @@ public class RabbitMgmtApiService {
         return null;
     }
 
-    public List<Object> getTopology() {
-        List<Object> res = new ArrayList<>();
+    public List<XTestFanOutQueue> getTopology() {
+        List<XTestFanOutQueue> res = new ArrayList<>();
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(new URI(API_BIND_LIST))
-                    .header(AUTHORIZATION, localAuth())
-                    .build();
+                                         .GET()
+                                         .uri(new URI(API_BIND_LIST))
+                                         .header(AUTHORIZATION, localAuth())
+                                         .build();
             HttpResponse<String> response = amqpHttpClient.send(req, HttpResponse.BodyHandlers.ofString());
-            res = Arrays.asList(mapper.readValue(response.body(), Object[].class));
+            res = XTestFanOutQueue.toList(response.body());
         } catch (Exception e) {
             log.error("RabbitMgmtApiService.getQueues ", e);
         }
@@ -68,5 +68,16 @@ public class RabbitMgmtApiService {
 
     public boolean delete(String name) {
         return firstAmqpAdmin.deleteQueue(name);
+    }
+
+    public int deleteAll(List<XTestFanOutQueue> list) {
+        int cnt = 0;
+        for (XTestFanOutQueue queue : list) {
+            boolean deleted = firstAmqpAdmin.deleteQueue(queue.getDestination());
+            if (deleted)
+                cnt++;
+        }
+
+        return cnt;
     }
 }

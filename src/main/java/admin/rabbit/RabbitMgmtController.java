@@ -1,6 +1,8 @@
 package admin.rabbit;
 
 import admin.rabbit.service.RabbitMgmtApiService;
+import admin.web.dto.Bindings;
+import admin.web.dto.XTestFanOutQueue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +29,13 @@ public class RabbitMgmtController {
     }
 
     @GetMapping("/amqp/bindings")
-    public List<Object> getBindings() {
-        return service.getTopology();
+    public Bindings getBindings() {
+        return Bindings.toRes(service.getTopology());
+    }
+
+    @GetMapping("/amqp/bindings/clear")
+    public int deleteAll() {
+        List<XTestFanOutQueue> topology = service.getTopology();
+        return service.deleteAll(topology);
     }
 }
