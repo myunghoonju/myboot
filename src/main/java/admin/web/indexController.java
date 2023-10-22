@@ -1,20 +1,27 @@
 package admin.web;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import admin.config.auth.custom.annotation.LoginUser;
 import admin.config.auth.dto.SessionUser;
-import admin.domain.dsl.Team;
+import admin.domain.dsl.Tes;
 import admin.service.PostService;
 import admin.web.dto.PostListResponseDto;
 import admin.web.dto.PostResponseDto;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,12 +35,10 @@ public class indexController {
 		return "index";
 	}
 
-	@PostMapping("/a")
-	public ResponseEntity<Map<String, List<Team>>> index2() {
-		Map<String, List<Team>> test = postService.test();
-		log.error("test: {}", test.get("store"));
-
-		return ResponseEntity.ok().body(test);
+	@GetMapping("/a")
+	public ResponseEntity<String> index2() {
+		Tes tes = postService.test2();
+		return ResponseEntity.ok().body(tes.toString());
 	}
 
 	@GetMapping("/post/list")

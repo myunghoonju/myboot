@@ -63,7 +63,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
-        RedisNode redisNode = new RedisNode("127.0.0.1", 6379);
+        RedisNode redisNode = new RedisNode("127.0.0.1", 6384);
         redisClusterConfiguration.addClusterNode(redisNode);
         return new LettuceConnectionFactory(redisClusterConfiguration ,getLettuceClientConfiguration());
     }
@@ -74,9 +74,9 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .shutdownTimeout(Duration.ofMillis(1000))  // shutting down time limit
                 .clientOptions(ClusterClientOptions.builder()
                         .topologyRefreshOptions(ClusterTopologyRefreshOptions.builder()
-                                .enablePeriodicRefresh(Duration.ofMillis(1000)) // refresh node info duration
+                                .enablePeriodicRefresh(Duration.ofMillis(10000)) // refresh node info duration
                                 .enableAllAdaptiveRefreshTriggers()
-                                .adaptiveRefreshTriggersTimeout(Duration.ofMillis(10000))
+                                .adaptiveRefreshTriggersTimeout(Duration.ofMillis(3000))
                                 .build())
                         .timeoutOptions(TimeoutOptions.enabled())
                         .build())
