@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import admin.config.auth.custom.annotation.LoginUser;
 import admin.config.auth.dto.SessionUser;
 import admin.domain.dsl.Tes;
+import admin.domain.jdbctemplate.TestService;
 import admin.service.PostService;
 import admin.web.dto.PostListResponseDto;
 import admin.web.dto.PostResponseDto;
@@ -29,10 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 public class indexController {
 
 	private final PostService postService;
+	private final TestService testService;
 
 	@GetMapping("/")
 	public String index(Model model, @LoginUser SessionUser sessionUser) {
-		return "index";
+		return testService.post(1);
 	}
 
 	@GetMapping("/a")
