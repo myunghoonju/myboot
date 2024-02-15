@@ -5,9 +5,10 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
-    hibernate:
-      format_sql: true
-      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        ddl-auto: update
 
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -52,4 +53,8 @@ logging:
   level:
     org:
       hibernate:
-        type: trace # log parameters of prepared statements
+        SQL: debug
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
