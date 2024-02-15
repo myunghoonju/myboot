@@ -21,15 +21,12 @@ public class TestService {
         this.template = template;
     }
 
-    public String post(long id) {
+    public String post(long id, String pa) {
         Ans ans1 = new Ans();
         ans1.setId(id);
-        String s = """
-                    select id from post \n
-                    where id = :id 
-                    limit 1
-                   """;
-        Ans ans = (Ans) template.queryForObject(s, new BeanPropertySqlParameterSource(ans1), new Row());
+        String s = "select id from post partition(%s) where id = :id";
+        String formatted = String.format(s, pa);
+        Ans ans = (Ans) template.queryForObject(formatted, new BeanPropertySqlParameterSource(ans1), new Row());
         return ans.getId().toString();
     }
 

@@ -34,7 +34,7 @@ public class indexController {
 
 	@GetMapping("/")
 	public String index(Model model, @LoginUser SessionUser sessionUser) {
-		return testService.post(1);
+		return testService.post(11, "p20");
 	}
 
 	@GetMapping("/a")

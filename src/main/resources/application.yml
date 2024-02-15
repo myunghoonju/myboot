@@ -4,7 +4,6 @@ server:
 spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    open-in-view: false
     show-sql: true
     hibernate:
       format_sql: true
@@ -48,3 +47,9 @@ test:
 queue:
   fname: q.test
   sname: q.test-sec
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace # log parameters of prepared statements
