@@ -39,7 +39,8 @@ dependencies {
     implementation('io.dropwizard.metrics:metrics-core')
     implementation("org.mariadb.jdbc:mariadb-java-client")
     implementation('junit:junit:4.13.2')
-    implementation('com.h2database:h2')
+    implementation('mysql:mysql-connector-java')
+/*    implementation('com.h2database:h2')*/
     implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
     /*implementation('org.springframework.session:spring-session-jdbc')*/
     implementation('org.springframework.boot:spring-boot-starter-data-redis')
