@@ -1,6 +1,9 @@
 package admin.web;
 
+import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -33,8 +36,18 @@ public class indexController {
 	private final TestService testService;
 
 	@GetMapping("/")
-	public String index(Model model, @LoginUser SessionUser sessionUser) {
-		return testService.post(11, "p20");
+	public String index(Model model, @LoginUser SessionUser sessionUser,  HttpServletRequest request) {
+//		String ipAddresses = request.getHeader("x-forwarded-for");
+//		String ipAddress = Arrays.stream(ipAddresses.split(","))  // 최초 IP
+//								 .findFirst()
+//								 .orElse("");
+
+		String ipAddress2 = Arrays.stream(request.getRemoteAddr().split(","))  // 최초 IP
+								 .findFirst()
+								 .orElse("");
+
+
+		return "ip: " + ipAddress2;
 	}
 
 	@GetMapping("/a")

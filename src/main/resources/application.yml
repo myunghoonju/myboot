@@ -1,5 +1,6 @@
 server:
   port: 8085
+  forward-headers-strategy: native
 
 spring:
   jpa:
@@ -52,6 +53,10 @@ queue:
 logging:
   level:
     org:
+#      springframework:
+#        web:
+#          filter:
+#            CommonsRequestLoggingFilter:
       hibernate:
         SQL: debug
         type:
