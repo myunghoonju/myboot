@@ -2,7 +2,9 @@ package admin.web.dto;
 
 import admin.domain.post.Post;
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
 public class PostResponseDto {
 

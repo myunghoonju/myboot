@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.cache.CacheManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class indexController {
 
 	private final PostService postService;
 	private final TestService testService;
+	private final CacheManager redisCacheManager;
 
 	@GetMapping("/")
 	public String index(Model model, @LoginUser SessionUser sessionUser,  HttpServletRequest request) {
@@ -42,12 +44,11 @@ public class indexController {
 //								 .findFirst()
 //								 .orElse("");
 
-		String ipAddress2 = Arrays.stream(request.getRemoteAddr().split(","))  // 최초 IP
-								 .findFirst()
-								 .orElse("");
+//		String ipAddress2 = Arrays.stream(request.getRemoteAddr().split(","))  // 최초 IP
+//								 .findFirst()
+//								 .orElse("");
 
-
-		return "ip: " + ipAddress2;
+		return "ip: " + postService.posts();
 	}
 
 	@GetMapping("/a")
