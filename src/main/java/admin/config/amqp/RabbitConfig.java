@@ -3,6 +3,7 @@ package admin.config.amqp;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.BrokerEventListener;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -21,6 +22,11 @@ public class RabbitConfig {
 
     public RabbitConfig(ConnectListen connectListen) {
         this.connectListen = connectListen;
+    }
+
+    @Bean
+    public BrokerEventListener eventListener() {
+        return new BrokerEventListener(firstConnection(), "queue.#");
     }
 
     public static CachingConnectionFactory getCachingConnectionFactoryFactory() {
